@@ -1,0 +1,25 @@
+{
+  "name": "frontend-challenge-1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/ui": "^4.5.1",
+    "@nuxtjs/color-mode": "^3.5.2",
+    "@pinia/nuxt": "^0.11.3",
+    "pinia": "^3.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "nuxt": "^4.3.1",
+    "typescript": "^5.7.3",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  }
+}
