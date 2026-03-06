@@ -19,6 +19,7 @@
       <button
         v-for="bucket in group.buckets"
         :key="bucket.date.minute"
+        v-memo="[store.isSelected(bucket.date), colorMode.value]"
         class="w-3 h-3 rounded-sm shrink-0 transition-transform duration-75 hover:scale-125 focus-visible:outline-none cursor-pointer"
         :style="cellStyle(bucket)"
         @click="store.toggleChunk(bucket.date)"
@@ -53,17 +54,19 @@ const groupPartialSelected = computed(() =>
   props.group.buckets.some(b => store.isSelected(b.date)),
 )
 
+const CHECKMARK = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l2.8 2.8 5-5' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E")`
+
 function cellStyle(bucket: Bucket) {
   const selected = store.isSelected(bucket.date)
   const bg = getCellColor(bucket.dataCount, props.minDataCount, props.maxDataCount)
   const isDark = colorMode.value === 'dark'
-  const ringColor = isDark ? 'rgba(255,255,255,0.9)' : 'rgba(30,30,30,0.8)'
+  const empty = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.06)'
 
   return {
-    backgroundColor: bg === 'transparent'
-      ? isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.06)'
-      : bg,
-    boxShadow: selected ? `inset 0 0 0 1.5px ${ringColor}` : 'none',
+    backgroundColor: bg === 'transparent' ? empty : bg,
+    backgroundImage: selected ? CHECKMARK : 'none',
+    backgroundSize: '100% 100%',
+    boxShadow: selected ? 'inset 0 0 0 12px rgba(0,0,0,0.35)' : 'none',
   }
 }
 </script>
