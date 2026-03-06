@@ -5,7 +5,6 @@ A single-page dashboard for monitoring the integrity of firewall traffic log bac
 ## Getting Started
 
 ```bash
-cd "Backup Data Integrity Dashboard"
 npm install
 npm run dev
 ```
