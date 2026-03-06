@@ -10,34 +10,34 @@ interface TooltipState {
   maxDataCount: number
 }
 
-const state = reactive<TooltipState>({
-  visible: false,
-  x: 0,
-  y: 0,
-  bucket: null,
-  hour: 0,
-  minDataCount: 0,
-  maxDataCount: 0,
-})
-
 export function useChunkTooltip() {
+  const state = useState<TooltipState>('chunk-tooltip', () => ({
+    visible: false,
+    x: 0,
+    y: 0,
+    bucket: null,
+    hour: 0,
+    minDataCount: 0,
+    maxDataCount: 0,
+  }))
+
   function show(e: MouseEvent, bucket: Bucket, hour: number, min: number, max: number) {
-    state.bucket = bucket
-    state.hour = hour
-    state.minDataCount = min
-    state.maxDataCount = max
-    state.x = e.clientX
-    state.y = e.clientY
-    state.visible = true
+    state.value.bucket = bucket
+    state.value.hour = hour
+    state.value.minDataCount = min
+    state.value.maxDataCount = max
+    state.value.x = e.clientX
+    state.value.y = e.clientY
+    state.value.visible = true
   }
 
   function move(e: MouseEvent) {
-    state.x = e.clientX
-    state.y = e.clientY
+    state.value.x = e.clientX
+    state.value.y = e.clientY
   }
 
   function hide() {
-    state.visible = false
+    state.value.visible = false
   }
 
   return { state, show, move, hide }

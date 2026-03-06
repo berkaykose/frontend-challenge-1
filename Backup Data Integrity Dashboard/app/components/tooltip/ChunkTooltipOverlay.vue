@@ -59,13 +59,13 @@ const { state } = useChunkTooltip()
 const OFFSET = 16
 
 const tooltipStyle = computed(() => {
-  const x = state.x + OFFSET
-  const y = state.y + OFFSET
+  const x = state.value.x + OFFSET
+  const y = state.value.y + OFFSET
   const w = 208 // w-52 = 13rem = 208px
 
   // flip left if too close to right edge
   const left = typeof window !== 'undefined' && x + w > window.innerWidth
-    ? state.x - w - OFFSET
+    ? state.value.x - w - OFFSET
     : x
 
   return {
@@ -75,21 +75,21 @@ const tooltipStyle = computed(() => {
 })
 
 const cellColor = computed(() =>
-  state.bucket
-    ? getCellColor(state.bucket.dataCount, state.minDataCount, state.maxDataCount)
+  state.value.bucket
+    ? getCellColor(state.value.bucket.dataCount, state.value.minDataCount, state.value.maxDataCount)
     : '#22c55e',
 )
 
 const densityPct = computed(() => {
-  if (!state.bucket) return 0
-  const range = state.maxDataCount - state.minDataCount
+  if (!state.value.bucket) return 0
+  const range = state.value.maxDataCount - state.value.minDataCount
   if (range === 0) return 50
-  return Math.round(((state.bucket.dataCount - state.minDataCount) / range) * 100)
+  return Math.round(((state.value.bucket.dataCount - state.value.minDataCount) / range) * 100)
 })
 
 const time = computed(() => {
-  if (!state.bucket) return ''
-  return `${String(state.hour).padStart(2, '0')}:${String(state.bucket.date.minute ?? 0).padStart(2, '0')}`
+  if (!state.value.bucket) return ''
+  return `${String(state.value.hour).padStart(2, '0')}:${String(state.value.bucket.date.minute ?? 0).padStart(2, '0')}`
 })
 
 const badge = computed(() => {
